@@ -69,10 +69,17 @@ const generateId = () => {
 
 app.post('/persons', (request, response) =>{
     const body = request.body
-
-    if(!body){
+    if(!body.name || !body.number){
       return response.status(400).json({
-        error: 'content missing'
+        error: 'Name or Number content missing'
+      })
+    }
+    console.log(persons.map(p=> p.name === body.name))
+    if(persons.map(p=> p.name === body.name).includes(true))
+    {
+      console.log(body.name)
+      return response.status(400).json({
+        error: 'Name already exists.'
       })
     }
 
