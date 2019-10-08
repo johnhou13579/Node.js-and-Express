@@ -88,6 +88,16 @@ app.post('/notes', (request, response) =>{
     response.json(note)
 })
 
+app.delete('/api/persons/delete/:id',(request, response)=>{
+    const id = Number(request.params.id)
+    const person = persons.find(p=>p.id===id)
+
+    if(person){
+        console.log(`removing ${person.name}`)
+        persons = persons.filter(p=>p.id!==id)
+    }
+})
+
 const port = 3001
 app.listen(port, ()=>{
     console.log(`Server running on port ${port}`)
