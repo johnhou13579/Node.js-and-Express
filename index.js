@@ -67,11 +67,23 @@ app.post('/api/persons', (request, response) => {
 
 //DELETE removing person
 app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  const person = persons.find(p => p.id === id)
+  Note.findByIdAndRemove(requeust.params.id)
+  .then(result => {
+    response.status(204).end()
+  })
+})
 
-  persons = persons.filter(p => p.id !== id)
-  response.json(persons.filter(p => p.id !== id))
+app.put('/api/persons/:id', (request, response) => {
+  const body = request.body
+  const person = {
+    name: body.name,
+    number = body.number,
+  }
+
+  Note.findByIdAndUpdate(request.params.id, note, {new: true})
+    .then(updatedPerson => {
+      response.json(updatedPerson.toJSON())
+    })
 })
 
 let port = process.env.PORT
