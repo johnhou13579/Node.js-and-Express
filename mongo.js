@@ -2,40 +2,99 @@
 
 const mongoose = require('mongoose')
 
-if ( process.argv.length<3 ) {
-  console.log('give password as argument')
-  process.exit(1)
+if (process.argv.length < 3 ) {
+    console.log('give password as argument')
+    process.exit(1)
+}else if(process.argv.length === 3){
+    display()
+}else if(process.argv.length ===4){
+    console.log('not enough arguments')
+    process.exit(1)
+}else if(process.argv.length===5){
+    console.log(process.argv[4])
+    store()
+}else{
+    console.log('too many arguments')
+    process.exit(1)
 }
 
-const password = process.argv[2]
-
-const url =
-       `mongodb+srv://admin:${password}@cluster0-ghplz.mongodb.net/person-app?retryWrites=true&w=majority`
-mongoose.connect(url, { useNewUrlParser: true })
-
-const noteSchema = new mongoose.Schema({
-  content: String,
-  date: Date,
-  important: Boolean,
-})
-
-const Note = mongoose.model('Note', noteSchema)
-
-const note = new Note({
-  content: 'HTML is Easy',
-  date: new Date(),
-  important: true,
-})
-Note.find({}).then(result => {
-    result.forEach(note => {
-      console.log(note)
+function initial(){
+    const password = process.argv[2]
+    const nameTemp = process.argv[3]
+    const numberTemp = process.argv[4]
+    
+    const url =
+        `mongodb+srv://admin:${password}@cluster0-ghplz.mongodb.net/person-app?retryWrites=true&w=majority`
+    mongoose.connect(url, { useNewUrlParser: true })
+    
+    const noteSchema = new mongoose.Schema({
+        name: String,
+        number: String
     })
-    mongoose.connection.close()
-  })
-  
+    
+    const Person = mongoose.model('Note', noteSchema)
+    
+    const persons = new Person({
+        name: nameTemp,
+        number: numberTemp
+    })
 
-/* note.save().then(response => {
-  console.log('note saved!')
-  mongoose.connection.close()
-})
- */
+}
+
+
+function store(){
+    const password = process.argv[2]
+    const nameTemp = process.argv[3]
+    const numberTemp = process.argv[4]
+    
+    const url =
+        `mongodb+srv://admin:${password}@cluster0-ghplz.mongodb.net/person-app?retryWrites=true&w=majority`
+    mongoose.connect(url, { useNewUrlParser: true })
+    
+    const noteSchema = new mongoose.Schema({
+        name: String,
+        number: String
+    })
+    
+    const Person = mongoose.model('Note', noteSchema)
+    
+    const persons = new Person({
+        name: nameTemp,
+        number: numberTemp
+    })
+    persons.save().then(response => {
+        console.log(`added ${nameTemp} number ${numberTemp} to phonebook`)
+        mongoose.connection.close()
+      })
+}
+
+function display(){
+    const password = process.argv[2]
+    const nameTemp = process.argv[3]
+    const numberTemp = process.argv[4]
+    
+    const url =
+        `mongodb+srv://admin:${password}@cluster0-ghplz.mongodb.net/person-app?retryWrites=true&w=majority`
+    mongoose.connect(url, { useNewUrlParser: true })
+    
+    const noteSchema = new mongoose.Schema({
+        name: String,
+        number: String
+    })
+    
+    const Person = mongoose.model('Note', noteSchema)
+    
+    const persons = new Person({
+        name: nameTemp,
+        number: numberTemp
+    })
+
+    Person.find({}).then(result => {
+        result.forEach(persons => {
+          console.log(`${persons.name} ${persons.number}`)
+        })
+        mongoose.connection.close()
+      })
+      
+}
+
