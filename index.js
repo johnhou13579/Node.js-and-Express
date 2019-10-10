@@ -3,6 +3,7 @@
 
 //npm run watch
 
+//git push
 //git push heroku master
 //heroku local web
 
