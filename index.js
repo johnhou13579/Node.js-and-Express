@@ -67,21 +67,24 @@ app.post('/api/persons', (request, response) => {
 
 //DELETE removing person
 app.delete('/api/persons/:id', (request, response) => {
-  Note.findByIdAndRemove(request.params.id)
+  Person.findByIdAndRemove(request.params.id)
   .then(result => {
     response.status(204).end()
   })
 })
 
+//PUT update person
 app.put('/api/persons/:id', (request, response) => {
   const body = request.body
+
+  console.log(body)
+  console.log(body.name)
   const person = {
     name: body.name,
     number: body.number,
-    id: body.id,
   }
 
-  Note.findByIdAndUpdate(request.params.id, note, {new: true})
+  Person.findByIdAndUpdate(request.params.id, person, {new: true})
     .then(updatedPerson => {
       response.json(updatedPerson.toJSON())
     })
