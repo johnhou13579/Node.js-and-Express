@@ -2,6 +2,18 @@
 
 const mongoose = require('mongoose')
 
+const url =
+  'mongodb+srv://admin:snowleopard@cluster0-ostce.mongodb.net/note-app?retryWrites=true'
+
+mongoose.connect(url, { useNewUrlParser: true })
+
+const noteSchema = new mongoose.Schema({
+  name: String,
+  number: String
+})
+
+const Note = mongoose.model('Note', noteSchema)
+
 if (process.argv.length < 3 ) {
     console.log('give password as argument')
     process.exit(1)
