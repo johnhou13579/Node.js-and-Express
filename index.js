@@ -3,6 +3,8 @@
 
 //npm run watch
 
+//heroku local web
+
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
@@ -105,7 +107,10 @@ app.delete('/api/persons/delete/:id',(request, response)=>{
     response.json(persons.filter(p=>p.id!==id))
 })
 
-const port = 3001
+let port = process.env.PORT
+
+if(port==null || port =="" ? port=3001: port=process.env.PORT)
+
 app.listen(port, ()=>{
     console.log(`Server running on port ${port}`)
 })
