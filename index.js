@@ -17,9 +17,10 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use(express.static('build'))
 
+
 //MongoDB Setup
 const url =
-  'mongodb+srv://admin:<snowleopard>@cluster0-ghplz.mongodb.net/person-app?retryWrites=true&w=majority'
+  'mongodb+srv://admin:snowleopard@cluster0-ghplz.mongodb.net/person-app?retryWrites=true&w=majority'
 
 mongoose.connect(url, { useNewUrlParser: true })
 
@@ -28,11 +29,21 @@ const noteSchema = new mongoose.Schema({
   number: String
 })
 
-const Note = mongoose.model('Note', noteSchema)
+noteSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
+
+const Person = mongoose.model('Note', noteSchema)
 
 //API Calls
 app.get('/api/persons', (req, res) => {
-  res.json(persons)
+  Person.find({}).then(p => {
+    res.json(p.map(l=>l.toJSON()))
+  })
 })
 
 app.get('/info', (req, res) => {
@@ -43,9 +54,14 @@ app.get('/info', (req, res) => {
 
 
 app.get('/api/persons/:id', (request, response) => {
-  Note.find({}).then(notes=>{
-    response.json(notes)
-  })
+  const id = Number(request.params.id)
+  const person = persons.find(p => p.id === id)
+
+  if (person) {
+    response.json(person)
+  } else {
+    response.status(404).end()
+  }
 
 })
 
