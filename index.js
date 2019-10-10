@@ -31,21 +31,23 @@ app.get('/info', (req, res) => {
   res.send(`<p> Phonebook has info for ${num} people </p> ${date}`)
 })
 
-
+//GET retrieve by ID
 app.get('/api/persons/:id', (request, response) => {
-  Person.findById(request.params.id).then(p=>{
-    response.json(p.toJSON())
+  Person.findById(request.params.id).
+  then(p=>{
+     if(p){
+       response.json(p.toJSON())
+     }else{
+       response.status(404).end()
+    }
+  })
+  .catch(error => {
+    console.log(error);
+    response.status(404).send({error:'malformatted id'})
   })
 })
 
-/* const generateId = () => {
-  const maxId = Person.length > 0
-    ? Math.max(...Person.map(n => n.id))
-    : 0
-  return maxId + 1
-}
- */
-
+//POST adding person
 app.post('/api/persons', (request, response) => {
   const body = request.body
 
@@ -63,6 +65,7 @@ app.post('/api/persons', (request, response) => {
   })
 })
 
+//DELETE removing person
 app.delete('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
   const person = persons.find(p => p.id === id)
