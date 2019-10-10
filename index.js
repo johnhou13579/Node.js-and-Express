@@ -3,6 +3,7 @@
 
 //npm run watch
 
+//git push heroku master
 //heroku local web
 
 const express = require('express')
