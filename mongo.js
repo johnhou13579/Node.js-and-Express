@@ -1,15 +1,24 @@
 //node mongo.js <password>
 
 const mongoose = require('mongoose')
+var mongoose = require('mongoose');
+var uniqueValidator = require('mongoose-unique-validator');
 
+var mySchema = mongoose.Schema(/* put your schema definition here */);
 const url =
   'mongodb+srv://admin:snowleopard@cluster0-ostce.mongodb.net/note-app?retryWrites=true'
 
 mongoose.connect(url, { useNewUrlParser: true })
 
 const noteSchema = new mongoose.Schema({
-  name: String,
-  number: String
+    name: {
+      type: String,
+      required: true  
+    },
+    number: {
+        type: String,
+        require: true
+    }
 })
 
 const Note = mongoose.model('Note', noteSchema)
@@ -40,8 +49,14 @@ function initial(){
     mongoose.connect(url, { useNewUrlParser: true })
     
     const noteSchema = new mongoose.Schema({
-        name: String,
-        number: String
+        name: {
+          type: String,
+          required: true  
+        },
+        number: {
+            type: String,
+            require: true
+        }
     })
     
     const Person = mongoose.model('Note', noteSchema)
@@ -62,18 +77,23 @@ function store(){
     const url =
         `mongodb+srv://admin:${password}@cluster0-ghplz.mongodb.net/person-app?retryWrites=true&w=majority`
     mongoose.connect(url, { useNewUrlParser: true })
-    
+
     const noteSchema = new mongoose.Schema({
-        name: String,
-        number: String
+        name: {
+          type: String,
+          required: true,
+          minlength: 1  
+        },
+        number: {
+            type: String,
+            require: true,
+            minlength: 1
+        }
     })
-    
+    userSchema.plugin(uniqueValidator);
+
     const Person = mongoose.model('Note', noteSchema)
-    
-    const persons = new Person({
-        name: nameTemp,
-        number: numberTemp
-    })
+
     persons.save().then(response => {
         console.log(`added ${nameTemp} number ${numberTemp} to phonebook`)
         mongoose.connection.close()
@@ -90,17 +110,23 @@ function display(){
     mongoose.connect(url, { useNewUrlParser: true })
     
     const noteSchema = new mongoose.Schema({
-        name: String,
-        number: String
+        name: {
+          type: String,
+          required: true  
+        },
+        number: {
+            type: String,
+            require: true
+        }
     })
-    
+
     const Person = mongoose.model('Note', noteSchema)
     
     const persons = new Person({
         name: nameTemp,
         number: numberTemp
     })
-
+    
     Person.find({}).then(result => {
         result.forEach(persons => {
           console.log(`${persons.name} ${persons.number}`)

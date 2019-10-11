@@ -63,6 +63,10 @@ app.post('/api/persons', (request, response) => {
   persons.save().then(p => {
     response.json(p.toJSON())
   })
+  .catch(error => {
+    console.log(error);
+    response.status(404).send({error:'Required content missing'})
+  })
 })
 
 //DELETE removing person
