@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
+var mongoose = require('mongoose');
+var uniqueValidator = require('mongoose-unique-validator');
 mongoose.set('useFindAndModify', false)
+
 
 //MongoDB Setup
 const url =
@@ -8,10 +11,18 @@ const url =
 mongoose.connect(url, { useNewUrlParser: true })
 
 const noteSchema = new mongoose.Schema({
-  name: String,
-  number: String,
+  name: {
+    type: String,
+    required: true  
+  },
+  number: {
+      type: String,
+      require: true
+  },
   id: String
 })
+userSchema.plugin(uniqueValidator);
+
 
 noteSchema.set('toJSON', {
   transform: (document, returnedObject) => {
