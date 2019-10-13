@@ -12,15 +12,17 @@ mongoose.connect(url, { useNewUrlParser: true })
 const noteSchema = new mongoose.Schema({
   name: {
     type: String,
+    minlength: 1,
     required: true  
   },
   number: {
       type: String,
-      require: true
+      minlength: 1,
+      required: true
   },
   id: String
 })
-userSchema.plugin(uniqueValidator);
+noteSchema.plugin(uniqueValidator);
 
 
 noteSchema.set('toJSON', {
