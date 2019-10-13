@@ -11,14 +11,8 @@ const url =
 mongoose.connect(url, { useNewUrlParser: true })
 
 const noteSchema = new mongoose.Schema({
-    name: {
-      type: String,
-      required: true  
-    },
-    number: {
-        type: String,
-        require: true
-    }
+    name: String,
+    number: String
 })
 
 const Note = mongoose.model('Note', noteSchema)
@@ -49,14 +43,8 @@ function initial(){
     mongoose.connect(url, { useNewUrlParser: true })
     
     const noteSchema = new mongoose.Schema({
-        name: {
-          type: String,
-          required: true  
-        },
-        number: {
-            type: String,
-            require: true
-        }
+        name: String,
+        number: String
     })
     
     const Person = mongoose.model('Note', noteSchema)
@@ -79,18 +67,9 @@ function store(){
     mongoose.connect(url, { useNewUrlParser: true })
 
     const noteSchema = new mongoose.Schema({
-        name: {
-          type: String,
-          required: true,
-          minlength: 1  
-        },
-        number: {
-            type: String,
-            require: true,
-            minlength: 1
-        }
+        name: String,
+        number: String
     })
-    userSchema.plugin(uniqueValidator);
 
     const Person = mongoose.model('Note', noteSchema)
 
@@ -110,14 +89,8 @@ function display(){
     mongoose.connect(url, { useNewUrlParser: true })
     
     const noteSchema = new mongoose.Schema({
-        name: {
-          type: String,
-          required: true  
-        },
-        number: {
-            type: String,
-            require: true
-        }
+        name: String,
+        number: String
     })
 
     const Person = mongoose.model('Note', noteSchema)

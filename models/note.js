@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 mongoose.set('useFindAndModify', false)
 
