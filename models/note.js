@@ -12,12 +12,12 @@ mongoose.connect(url, { useNewUrlParser: true })
 const noteSchema = new mongoose.Schema({
   name: {
     type: String,
-    minlength: 1,
+    minlength: 3,
     required: true  
   },
   number: {
       type: String,
-      minlength: 1,
+      minlength: 8,
       required: true
   },
   id: String
